@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rafeeq · Madar Municipal Services</title>
+<style>
+  body { font-family: system-ui, "Segoe UI", Tahoma, sans-serif; margin: 0; background: #f6f7f9; color: #1d2329; }
+  main { max-width: 820px; margin: 0 auto; padding: 16px; }
+  h1 { font-size: 1.25rem; margin: 8px 0 2px; }
+  .note { color: #5b6670; font-size: .85rem; margin: 0 0 12px; }
+  .row { display: flex; gap: 8px; margin: 8px 0; }
+  input, textarea, button { font: inherit; }
+  input, textarea { flex: 1; padding: 8px; border: 1px solid #c9d0d6; border-radius: 6px; background: #fff; }
+  textarea { min-height: 64px; }
+  button { padding: 8px 14px; border: 0; border-radius: 6px; background: #1f6feb; color: #fff; cursor: pointer; }
+  button:disabled { background: #9aa6b2; cursor: default; }
+  #log { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+  .msg { padding: 10px 12px; border-radius: 8px; white-space: pre-wrap; unicode-bidi: plaintext; }
+  .you { background: #e7f0ff; align-self: flex-end; max-width: 85%; }
+  .bot { background: #fff; border: 1px solid #e1e5e9; max-width: 95%; }
+  .trace { font-family: ui-monospace, Consolas, monospace; font-size: .8rem; color: #3a4651; margin-top: 6px; }
+  #status { font-size: .9rem; color: #5b6670; min-height: 1.2em; }
+  #approval { display: none; border: 2px solid #d29922; background: #fff8e5; border-radius: 8px; padding: 12px; }
+  #approval code { display: block; margin: 6px 0 10px; }
+  .reject { background: #cf222e; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Rafeeq · رفيق</h1>
+  <p class="note">Madar Municipal Services (synthetic data). Answers come from the real model through our server;
+    write actions wait for an officer's approval below.</p>
+
+  <div class="row">
+    <input id="token" type="password" placeholder="Access token (RAFEEQ_WEB_TOKEN)" autocomplete="off">
+  </div>
+
+  <div id="log" aria-live="polite"></div>
+
+  <div id="approval" role="alertdialog" aria-labelledby="approval-title">
+    <strong id="approval-title">Officer approval needed</strong>
+    <code id="approval-summary"></code>
+    <div class="row">
+      <button id="approve">Approve</button>
+      <button id="reject" class="reject">Reject</button>
+    </div>
+  </div>
+
+  <div id="status"></div>
+  <div class="row">
+    <textarea id="message" placeholder="Ask Rafeeq… / اسأل رفيق…" dir="auto"></textarea>
+    <button id="send">Send</button>
+  </div>
+</main>
+<script>
+  const $ = (id) => document.getElementById(id);
+  const session = "web-" + Math.random().toString(36).slice(2, 10);
+  let job = null, approvalId = null;
+  try { $("token").value = sessionStorage.getItem("rafeeq-token") || ""; } catch (e) {}
+
+  function add(cls, text, lines) {
+    const div = document.createElement("div");
+    div.className = "msg " + cls;
+    div.dir = "auto";
+    div.textContent = text;  // text only: nothing from the server is parsed as HTML
+    if (lines && lines.length) {
+      const t = document.createElement("div");
+      t.className = "trace";
+      t.textContent = lines.join("\n");
+      div.appendChild(t);
+    }
+    $("log").appendChild(div);
+    div.scrollIntoView({ block: "end" });
+  }
+
+  async function api(path, body) {
+    const token = $("token").value.trim();
+    try { sessionStorage.setItem("rafeeq-token", token); } catch (e) {}
+    const res = await fetch(path, {
+      method: body ? "POST" : "GET",
+      headers: { "Content-Type": "application/json", "X-Rafeeq-Token": token },
+      body: body ? JSON.stringify(body) : undefined,
+    });
+    if (!res.ok) throw new Error(res.status + " " + (await res.text()));
+    return res.json();
+  }
+
+  async function send() {
+    const text = $("message").value.trim();
+    if (!text || job) return;
+    $("send").disabled = true;
+    add("you", text);
+    $("message").value = "";
+    $("status").textContent = "Sending…";
+    try {
+      job = (await api("/api/chat", { session_id: session, message: text })).job_id;
+      poll();
+    } catch (e) { $("status").textContent = "Error: " + e.message; $("send").disabled = false; }
+  }
+
+  async function poll() {
+    try {
+      const j = await api("/api/jobs/" + job);
+      if (j.status === "awaiting_approval" && j.approval) {
+        approvalId = j.approval.id;
+        $("approval-summary").textContent = j.approval.summary;
+        $("approval").style.display = "block";
+        $("status").textContent = "Waiting for the officer's decision…";
+      } else {
+        $("approval").style.display = "none";
+        $("status").textContent = j.status === "running" ? "Rafeeq is working (model and tools)…" : "";
+      }
+      if (j.status === "done" || j.status === "error") {
+        const decisions = j.decisions.map((d) => `🛡️ ${d.decision}: ${d.summary}`);
+        add("bot", j.status === "done" ? j.final : "Error: " + j.error,
+            [...j.trace, ...decisions, `steps: ${j.steps}${j.stopped ? " · " + j.stopped : ""}`]);
+        job = null; $("send").disabled = false;
+        return;
+      }
+    } catch (e) { $("status").textContent = "Error: " + e.message; }
+    setTimeout(poll, 1000);
+  }
+
+  async function decide(decision) {
+    if (!approvalId) return;
+    $("approve").disabled = $("reject").disabled = true;
+    try { await api("/api/approvals/" + approvalId, { decision }); }
+    catch (e) { $("status").textContent = "Error: " + e.message; }
+    approvalId = null;
+    $("approve").disabled = $("reject").disabled = false;
+    $("approval").style.display = "none";
+  }
+
+  $("send").onclick = send;
+  $("message").addEventListener("keydown", (e) => { if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) send(); });
+  $("approve").onclick = () => decide("approve");
+  $("reject").onclick = () => decide("reject");
+</script>
+</body>
+</html>

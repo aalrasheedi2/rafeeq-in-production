@@ -42,7 +42,7 @@ git clone <this repository> rafeeq          # our files go in labs/rafeeq/
 cp .env.example .env                        # then set OPENROUTER_API_KEY, and the model lines below
 uv sync
 uv run python prepare_data.py               # synthetic Madar data
-uv run pytest rafeeq -q                     # 131 offline tests: no model call, no key needed
+uv run pytest rafeeq -q                     # 139 offline tests: no model call, no key needed
 uv run rafeeq/rafeeq.py ask "What is the fee for an illuminated 3 m² sign?"
 ```
 
@@ -66,6 +66,26 @@ uv run rafeeq/security_redteam.py --configs naive guard_only defended --cases im
 
 (`--allow-unreviewed-b` is the runner's safety switch: B could not run before it was chosen from A's errors. It
 has been chosen; the flag name stayed so A's fingerprint would not change.)
+
+### Web interface (FastAPI + one HTML page, our Rafeeq)
+
+```bash
+# PowerShell: $env:RAFEEQ_WEB_TOKEN = "a-long-random-string"   ·   bash: export RAFEEQ_WEB_TOKEN=a-long-random-string
+uv run rafeeq/web_api.py            # then open http://127.0.0.1:8800 and paste the same token in the page
+```
+
+`web_api.py` serves **our** agent (`rafeeq.make_agent`, configuration A: `AGENTS.md`, local + MCP tools,
+permissions, budgets, redaction, audit), not the course's reference service. When Rafeeq calls a write tool the run
+**pauses on the server** and the page shows *Officer approval needed: `book_inspection(permit_id=…, slot=…)`* with
+**Approve / Reject**; the officer's click resumes the run (no answer in 10 minutes = reject). The OpenRouter key stays
+in `labs/.env` on the server; every API call needs the `X-Rafeeq-Token` header; the server listens on 127.0.0.1 only;
+conversations stay in memory, never on disk; answers, tool lines and approval prompts are redacted. Adding the web
+layer did not change `rafeeq.py`, so A's and B's `config_id`s are unchanged.
+
+Tested on the real model: the fee question → `[mcp] compute_fee` → 750 SAR; a booking for FTR-30311 on
+4 November 09:00 → paused for approval → **Reject**: nothing written; → **Approve** (clicked in the page):
+**INS-9002 booked**, checked in the database. Offline: `test_web_api.py` (8 tests: token, MCP trace, approve and
+reject on the server, no key or verification data in responses).
 
 **Reproducibility (checked from a clean clone, following the steps above):** the course repository at `e950ba2` +
 this repository in `labs/rafeeq` → `uv sync`, `prepare_data.py` (the same database bytes as ours), **131/131 offline
@@ -207,10 +227,16 @@ a B that would book without the applicant picking the slot (`EVAL_NOTES_A.md`).
   fingerprint. With the free tier (50 requests/day) a full A+B run takes several days; we bought OpenRouter credits
   ($10, 1,000 free-model requests/day, not spent by free models) to finish B and the security runs in time.
 - A runner bug counts a malformed provider response as a harness failure (1 row in A, 1 in B).
-- The course's reference FastAPI service (`servers/rafeeq_api.py`) runs (checked: `/healthz`, 401 without a key, one
-  chat call → 750 SAR) but is **not integrated** with our version: it uses the course prompt instead of our
-  `AGENTS.md`, queues writes instead of asking an officer interactively, keeps model fallbacks on, and stores the raw
-  conversation, including verification data, in `sessions.sqlite` — our redaction is not applied there.
+- Our web layer (`web_api.py`) is a local demo, not a hardened service: one shared access token for the applicant
+  and the officer roles, no HTTPS (127.0.0.1 only), one agent run at a time, sessions lost on restart; the
+  applicant's own message is shown in the page as they typed it.
+- The course's reference FastAPI service (`servers/rafeeq_api.py`) also runs (checked: `/healthz`, 401 without a
+  key, one chat call → 750 SAR) but we did not adopt it: it uses the course prompt instead of our `AGENTS.md`, queues
+  writes instead of asking an officer, keeps model fallbacks on, and stores the raw conversation, including
+  verification data, in `sessions.sqlite`.
+- Models sometimes write IDs with Unicode hyphens ("INS‑9002"); `rafeeq.redact_text` then over-masks them. The web
+  layer normalises hyphens first; the CLI does not, because changing `rafeeq.py` would change the measured
+  fingerprints.
 - Redaction is pattern-based: names and free-form numbers are not masked. Rafeeq also shares more than needed in
   some status answers (name, district, area, fee when only the status was asked).
 - Model choice rests on availability and our own eval, not on a benchmark comparison.
@@ -224,7 +250,8 @@ a B that would book without the applicant picking the slot (`EVAL_NOTES_A.md`).
 | `eval_runner.py` | resumable, metered eval runner on the course's `evals.py` |
 | `security_redteam.py` | trifecta experiment: naive / guard_only / defended |
 | `check_booking.py` | read-only booking check for the live demo |
-| `test_*.py` | 131 offline tests (context, privacy, booking, runner, config isolation, security) |
+| `web_api.py`, `web/index.html` | FastAPI server for our Rafeeq + the page with Approve / Reject |
+| `test_*.py` | 139 offline tests (context, privacy, booking, runner, config isolation, security, web) |
 | `DEMO_BOOKING.md`, `DEMO_RESULTS.md`, `EVAL_NOTES_A.md` | live demo script and evidence; exploratory evals and the policy review |
 | `results/` | real eval and security CSVs |
 | `SLIDES.md` | the 8-minute presentation |
