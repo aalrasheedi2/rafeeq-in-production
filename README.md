@@ -67,6 +67,14 @@ uv run rafeeq/security_redteam.py --configs naive guard_only defended --cases im
 (`--allow-unreviewed-b` is the runner's safety switch: B could not run before it was chosen from A's errors. It
 has been chosen; the flag name stayed so A's fingerprint would not change.)
 
+**Reproducibility (checked from a clean clone, following the steps above):** the course repository at `e950ba2` +
+this repository in `labs/rafeeq` → `uv sync`, `prepare_data.py` (the same database bytes as ours), **131/131 offline
+tests passed**, `eval_runner.py plan` printed **the same `config_id`s as the published results**
+(A `5c438a45ebf5`, B `a32c12de3a1f`), so the code here is the code that was measured; and one real `ask` returned
+750 SAR through `compute_fee` over MCP. `.gitattributes` keeps LF line endings: the fingerprint hashes file bytes, and
+a CRLF checkout would change it. (`code_version` in the CSVs is the commit of our working repository before this
+history was cut for publication; the `config_id` is the reliable identity.)
+
 Windows note: inside some sandboxed shells `uv` is not on `PATH` and its Python must be installed outside
 `AppData`; we used `UV_PYTHON_INSTALL_DIR=%USERPROFILE%\.uv\python`.
 
