@@ -1,0 +1,2 @@
+# keep LF everywhere: eval_runner.py fingerprints file bytes, so CRLF checkouts would change config_id
+* text=auto eol=lf
