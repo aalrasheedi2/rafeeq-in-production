@@ -38,7 +38,7 @@ file, so we do not copy its files here.
 git clone https://github.com/SDAIAAcademy/agentic-ai
 cd agentic-ai && git checkout e950ba2      # the course version we built and measured on
 cd labs
-git clone <this repository> rafeeq          # our files go in labs/rafeeq/
+git clone https://github.com/aalrasheedi2/rafeeq-in-production rafeeq   # our files go in labs/rafeeq/
 cp .env.example .env                        # then set OPENROUTER_API_KEY, and the model lines below
 uv sync
 uv run python prepare_data.py               # synthetic Madar data
@@ -88,8 +88,8 @@ Tested on the real model: the fee question → `[mcp] compute_fee` → 750 SAR; 
 reject on the server, no key or verification data in responses).
 
 **Reproducibility (checked from a clean clone, following the steps above):** the course repository at `e950ba2` +
-this repository in `labs/rafeeq` → `uv sync`, `prepare_data.py` (the same database bytes as ours), **131/131 offline
-tests passed**, `eval_runner.py plan` printed **the same `config_id`s as the published results**
+this repository in `labs/rafeeq` → `uv sync`, `prepare_data.py` (the same database bytes as ours), **139/139 offline
+tests passed** (131 before the web layer was added), `eval_runner.py plan` printed **the same `config_id`s as the published results**
 (A `5c438a45ebf5`, B `a32c12de3a1f`), so the code here is the code that was measured; and one real `ask` returned
 750 SAR through `compute_fee` over MCP. `.gitattributes` keeps LF line endings: the fingerprint hashes file bytes, and
 a CRLF checkout would change it. (`code_version` in the CSVs is the commit of our working repository before this
