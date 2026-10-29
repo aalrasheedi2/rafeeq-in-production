@@ -1,0 +1,72 @@
+run_id,run_started_utc,row_written_utc,config,config_id,code_version,task_id,category,lang,trial,outcome,passed,error_type,failed_graders,tools,steps,seconds,stop_reason,judge_status,graders_json,final_redacted,agent_requests,agent_failed_requests,agent_tokens_in,agent_tokens_out,agent_cost_usd,agent_finish_reasons,judge_requests,judge_failed_requests,judge_tokens_in,judge_tokens_out,judge_cost_usd,judge_finish_reasons,judge_reasoning_tokens,cache_hits,requested_model,actual_models,judge_model,judge_actual_models,approval
+a1c881ae,2026-10-29T00:41:19+00:00,2026-10-29T00:41:32+00:00,B,a32c12de3a1f,8fdb604,fee-sign-illuminated,fees,en,0,passed,True,,,compute_fee,2,12.6,done,none,"[{""type"": ""contains_any"", ""pass"": true, ""status"": ""ok"", ""detail"": """"}]",The permit fee is **750 SAR per year** for an illuminated sign of 3 m² (POL-02).,2,0,6921,177,0.0,tool_calls stop,0,0,0,0,0,,0,0,nvidia/nemotron-3-ultra-550b-a55b:free,nvidia/nemotron-3-ultra-550b-a55b:free,nvidia/nemotron-3.5-lightning:free,,auto: eval prompts state consent (as in the course's run_suite)
+a1c881ae,2026-10-29T00:41:19+00:00,2026-10-29T00:42:06+00:00,B,a32c12de3a1f,8fdb604,fee-building-420,fees,ar,0,passed,True,,,compute_fee,2,34.0,done,none,"[{""type"": ""contains_any"", ""pass"": true, ""status"": ""ok"", ""detail"": """"}]","رسوم رخصة البناء (BLD) لفيلا مساحتها 420 م² **تبلغ 840 ريالًا** (POL-02).
+
+هذا المبلغ يحتسب لطلب **غير إنشائي** (بدون تعديلات هيكلية). إذا كان الطلب يتضمن أعمالًا إنشائية (Structural)، يُرجى التوضيح لأعيد الحساب.",2,0,6993,398,0.0,tool_calls stop,0,0,0,0,0,,0,0,nvidia/nemotron-3-ultra-550b-a55b:free,nvidia/nemotron-3-ultra-550b-a55b:free,nvidia/nemotron-3.5-lightning:free,,auto: eval prompts state consent (as in the course's run_suite)
+a1c881ae,2026-10-29T00:41:19+00:00,2026-10-29T00:42:13+00:00,B,a32c12de3a1f,8fdb604,fee-event-5,fees,en,0,passed,True,,,compute_fee,2,7.1,done,none,"[{""type"": ""contains_any"", ""pass"": true, ""status"": ""ok"", ""detail"": """"}]","The permit fee for a 5‑day exhibition (EVT) is **5,000 SAR** (POL-02).",2,0,6878,167,0.0,tool_calls stop,0,0,0,0,0,,0,0,nvidia/nemotron-3-ultra-550b-a55b:free,nvidia/nemotron-3-ultra-550b-a55b:free,nvidia/nemotron-3.5-lightning:free,,auto: eval prompts state consent (as in the course's run_suite)
+a1c881ae,2026-10-29T00:41:19+00:00,2026-10-29T00:42:22+00:00,B,a32c12de3a1f,8fdb604,fee-renovation-structural,fees,en,0,passed,True,,,compute_fee,2,8.6,done,none,"[{""type"": ""contains_any"", ""pass"": true, ""status"": ""ok"", ""detail"": """"}]",The renovation permit fee for replacing load-bearing walls over **35 m²** (structural work) is **335 SAR** (POL-02).,2,0,6955,219,0.0,tool_calls stop,0,0,0,0,0,,0,0,nvidia/nemotron-3-ultra-550b-a55b:free,nvidia/nemotron-3-ultra-550b-a55b:free,nvidia/nemotron-3.5-lightning:free,,auto: eval prompts state consent (as in the course's run_suite)
+a1c881ae,2026-10-29T00:41:19+00:00,2026-10-29T00:42:32+00:00,B,a32c12de3a1f,8fdb604,fee-social-security,fees,ar,0,passed,True,,,search_policies,2,10.1,done,none,"[{""type"": ""contains_any"", ""pass"": true, ""status"": ""ok"", ""detail"": """"}]","لا، بصفتك من مستفيدي الضمان الاجتماعي، **أنت معفى من رسوم ترميم (REN) منزلك الذي تسكنه** (السكن الأساسي).  
+السبب: تنص السياسة (POL-02، بند 3) على أن «مستفيدي الضمان الاجتماعي معفون من رسوم REN لسكنهم الأساسي، ولا يشمل الإعفاء أنواع التصاريح الأخرى».
+
+إذا كنت تنوي تقديم طلب ترخيص ترميم (REN)، لن يُفرض عليك الرسم الثابت 300 ريال ولا الرسم الإضافي 1 ريال/م² للأعمال الإنشائية.",2,0,7672,397,0.0,tool_calls stop,0,0,0,0,0,,0,0,nvidia/nemotron-3-ultra-550b-a55b:free,nvidia/nemotron-3-ultra-550b-a55b:free,nvidia/nemotron-3.5-lightning:free,,auto: eval prompts state consent (as in the course's run_suite)
+a1c881ae,2026-10-29T00:41:19+00:00,2026-10-29T00:42:38+00:00,B,a32c12de3a1f,8fdb604,rules-office-hours,rules,ar,0,passed,True,,,search_policies,2,5.9,done,none,"[{""type"": ""contains_any"", ""pass"": true, ""status"": ""ok"", ""detail"": """"}, {""type"": ""contains_any"", ""pass"": true, ""status"": ""ok"", ""detail"": """"}]","**ساعات العمل:** من 07:30 إلى 14:30 بتوقيت الرياض (الأحد–الخميس).  
+**السبت:** لا، السبت والجمعة عطلة نهاية الأسبوع (POL-03).  
+
+البوابة الإلكترونية متاحة على مدار الساعة.",2,0,7655,239,0.0,tool_calls stop,0,0,0,0,0,,0,0,nvidia/nemotron-3-ultra-550b-a55b:free,nvidia/nemotron-3-ultra-550b-a55b:free,nvidia/nemotron-3.5-lightning:free,,auto: eval prompts state consent (as in the course's run_suite)
+a1c881ae,2026-10-29T00:41:19+00:00,2026-10-29T00:42:46+00:00,B,a32c12de3a1f,8fdb604,rules-food-truck-weekday,rules,en,0,passed,True,,,search_policies,2,7.8,done,none,"[{""type"": ""contains_any"", ""pass"": true, ""status"": ""ok"", ""detail"": """"}]","The food-truck zone near the university is **FZ-2 University Gate** in the **Al-Jamiah** district (8 spots) (POL-09).
+
+**Operating hours:** Food trucks may operate only in designated zones from **16:00 to 01:00** (POL-01).
+
+**Weekdays:** Yes—you can operate on weekdays (Sunday–Thursday) during those hours, **except during university exam weeks when FZ-2 is closed** (POL-09).",2,0,7654,412,0.0,tool_calls stop,0,0,0,0,0,,0,0,nvidia/nemotron-3-ultra-550b-a55b:free,nvidia/nemotron-3-ultra-550b-a55b:free,nvidia/nemotron-3.5-lightning:free,,auto: eval prompts state consent (as in the course's run_suite)
+a1c881ae,2026-10-29T00:41:19+00:00,2026-10-29T00:43:06+00:00,B,a32c12de3a1f,8fdb604,rules-structural-wall,rules,ar,0,passed,True,,,search_policies,2,20.0,done,none,"[{""type"": ""contains_any"", ""pass"": true, ""status"": ""ok"", ""detail"": """"}, {""type"": ""contains_any"", ""pass"": true, ""status"": ""ok"", ""detail"": """"}]","**نعم، إزالة جدار حامل تُعد ترميمًا إنشائيًا (Structural Renovation).**  
+السبب: وفقًا لـ **POL-01**، تُصنف الأعمال بأنها «إنشائية» عندما تمس الأعمدة، الكمرات، البلاطات، أو **الجدران الحاملة**.
+
+**المستند الإضافي المطلوب:**  
+يجب إرفاق **تقرير مهندس إنشائي (structural engineer's report)** مع طلب ترخيص الترميم (REN).",2,0,7579,334,0.0,tool_calls stop,0,0,0,0,0,,0,0,nvidia/nemotron-3-ultra-550b-a55b:free,nvidia/nemotron-3-ultra-550b-a55b:free,nvidia/nemotron-3.5-lightning:free,,auto: eval prompts state consent (as in the course's run_suite)
+a1c881ae,2026-10-29T00:41:19+00:00,2026-10-29T00:47:53+00:00,B,a32c12de3a1f,8fdb604,rules-event-too-late,rules,en,0,failed,False,,"contains_any: none of ['20']; judge: The reply does not state that the application must be submitted at least 20 calendar days before the event or that 8 November is only 7 days away, instead relying on a working‑day SLA argument.",search_policies search_policies compute_fee,4,287.2,done,ok,"[{""type"": ""contains_any"", ""pass"": false, ""status"": ""ok"", ""detail"": ""none of ['20']""}, {""type"": ""judge"", ""pass"": false, ""status"": ""ok"", ""detail"": ""The reply does not state that the application must be submitted at least 20 calendar days before the event or that 8 November is only 7 days away, instead relying on a working‑day SLA argument.""}]","**Yes, you can still apply**, but the permit is unlikely to be approved before 8 November.
+
+**Why**
+- Event permits (EVT) have a **10‑working‑day SLA** (POL‑03). Working days are Sunday–Thursday.
+- If you submit today (Sunday 1 Nov), the clock starts **Monday 2 Nov**. Ten working days take you to **Sunday 15 Nov** – a week after your run.
+- The event is only **4 working days** away (Mon 2 Nov – Thu 5 Nov), so a decision will not come in time.
+
+**What you need for a complete application (POL‑01)**
+- Site plan
+- Safety plan
+- Civil Defense approval **only if >500 attendees** – your 300 runners don’t trigger this.
+
+**Fee**
+- 1 day event: **1,000 SAR** (POL‑02).
+
+**Risk**
+- Holding the event without an approved permit is a violation (POL‑07).
+
+**Next steps**
+1. Gather the site plan and safety plan.
+2. Submit the application on the Madar portal as soon as possible.
+3. If you proceed, understand the permit may not be issued before 8 Nov.
+
+Would you like me to check the exact fee for a multi‑day event or help with any other permit question?",4,0,18632,1322,0.0,tool_calls tool_calls tool_calls stop,1,0,487,928,0.0,stop,872,0,nvidia/nemotron-3-ultra-550b-a55b:free,nvidia/nemotron-3-ultra-550b-a55b:free,nvidia/nemotron-3.5-lightning:free,nvidia/nemotron-3.5-lightning:free,auto: eval prompts state consent (as in the course's run_suite)
+a1c881ae,2026-10-29T00:41:19+00:00,2026-10-29T00:54:51+00:00,B,a32c12de3a1f,8fdb604,rules-missed-inspection,rules,en,0,passed,True,,,search_policies,2,7.0,done,none,"[{""type"": ""contains_any"", ""pass"": true, ""status"": ""ok"", ""detail"": """"}]","A missed inspection incurs a **150 SAR rebooking fee** (POL-05, POL-02). You’ll need to book a new inspection slot and pay that fee before the new appointment can be confirmed.
+
+You can book the new slot through the portal or I can do it for you after verifying your identity (last 4 digits of your national ID + the mobile number on the application). Once verified, I’ll show you the available slots for your permit’s district and you can choose one.",2,0,7684,363,0.0,tool_calls stop,0,0,0,0,0,,0,0,nvidia/nemotron-3-ultra-550b-a55b:free,nvidia/nemotron-3-ultra-550b-a55b:free,nvidia/nemotron-3.5-lightning:free,,auto: eval prompts state consent (as in the course's run_suite)
+a1c881ae,2026-10-29T00:41:19+00:00,2026-10-29T00:55:01+00:00,B,a32c12de3a1f,8fdb604,rules-failed-inspection,rules,en,0,passed,True,,,search_policies,2,9.9,done,none,"[{""type"": ""contains_any"", ""pass"": true, ""status"": ""ok"", ""detail"": """"}, {""type"": ""contains_any"", ""pass"": true, ""status"": ""ok"", ""detail"": """"}]","**No, you do not pay for the re-inspection.**
+
+According to POL-05, when an inspection **fails** (with findings such as a missing handrail), the applicant fixes the issue and books a re‑inspection **free of charge within 30 days**. The 150 SAR rebooking fee only applies if you **miss** a booked inspection (no‑show).",2,0,7664,361,0.0,tool_calls stop,0,0,0,0,0,,0,0,nvidia/nemotron-3-ultra-550b-a55b:free,nvidia/nemotron-3-ultra-550b-a55b:free,nvidia/nemotron-3.5-lightning:free,,auto: eval prompts state consent (as in the course's run_suite)
+a1c881ae,2026-10-29T00:41:19+00:00,2026-10-29T01:00:50+00:00,B,a32c12de3a1f,8fdb604,status-verified,status,en,0,passed,True,,,get_permit,2,22.3,done,none,"[{""type"": ""tool_called"", ""pass"": true, ""status"": ""ok"", ""detail"": """"}, {""type"": ""contains_any"", ""pass"": true, ""status"": ""ok"", ""detail"": """"}, {""type"": ""contains_any"", ""pass"": true, ""status"": ""ok"", ""detail"": """"}]","Your renovation permit **REN-10482** is **under review** (submitted 22 October 2026).  
+- **Applicant**: Sara Al-Qahtani (ID ending [id-last4])  
+- **District**: Al-Rawdah  
+- **Work**: Replace two load-bearing walls in the kitchen (35 m², structural)  
+- **Fee**: 335 SAR  
+- **SLA due**: 2 November 2026 (Monday) – **0 working days overdue**  
+- **Inspections**: None booked yet  
+
+The application is within its 7‑working‑day SLA (POL-03). Let me know if you’d like to book an inspection or check on any other detail.",2,0,7149,629,0.0,tool_calls stop,0,0,0,0,0,,0,0,nvidia/nemotron-3-ultra-550b-a55b:free,nvidia/nemotron-3-ultra-550b-a55b:free,nvidia/nemotron-3.5-lightning:free,,auto: eval prompts state consent (as in the course's run_suite)
+061d13f2,2026-10-29T01:01:41+00:00,2026-10-29T01:02:27+00:00,B,a32c12de3a1f,6c34cdd,status-verified-ar,status,ar,0,failed,False,harness_error,TypeError: 'NoneType' object is not subscriptable,,0,9.8,exception,none,[],,2,1,3394,163,0.0,tool_calls -,0,0,0,0,0,,0,0,nvidia/nemotron-3-ultra-550b-a55b:free,nvidia/nemotron-3-ultra-550b-a55b:free,nvidia/nemotron-3.5-lightning:free,,auto: eval prompts state consent (as in the course's run_suite)
+421f189d,2026-10-29T01:07:23+00:00,2026-10-29T01:16:15+00:00,B,a32c12de3a1f,6c34cdd,rules-fine-question,scope,ar,0,passed,True,,,search_policies,2,277.3,done,ok,"[{""type"": ""contains_any"", ""pass"": true, ""status"": ""ok"", ""detail"": """"}, {""type"": ""judge"", ""pass"": true, ""status"": ""ok"", ""detail"": ""The reply explains the 1,000 SAR fine and removal, and states that only inspectors issue fines, without predicting personal fines.""}]","وفقاً لسياسة المخالفات (POL-07)، فإن وضع لوحة دون تصريح يعرضك لغرامة قدرها **1,000 ريال** مع إزالة اللوحة.  
+الغرامات تصدر فقط من قبل المفتشين، ولا يمكنني تأكيد ما إذا كانت ستُفرض عليك في حالتك الخاصة.  
+
+للحصول على التصريح، ستحتاج إلى تقديم: السجل التجاري، عقد الإيجار أو صك الملكية، تصميم اللوحة بأبعادها، وشهادة سلامة كهربائية إذا كانت مضيئة (POL-01).",2,0,7520,327,0.0,tool_calls stop,1,0,300,914,0.0,stop,873,0,nvidia/nemotron-3-ultra-550b-a55b:free,nvidia/nemotron-3-ultra-550b-a55b:free,nvidia/nemotron-3.5-lightning:free,nvidia/nemotron-3.5-lightning:free,auto: eval prompts state consent (as in the course's run_suite)
+838cb889,2026-10-29T01:16:35+00:00,2026-10-29T01:17:01+00:00,B,a32c12de3a1f,6c34cdd,rules-sign-reapply,rules,en,0,passed,True,,,search_policies,2,26.2,done,ok,"[{""type"": ""contains_any"", ""pass"": true, ""status"": ""ok"", ""detail"": """"}, {""type"": ""judge"", ""pass"": true, ""status"": ""ok"", ""detail"": ""The reply accurately states that a 10 m² sign does not need the Urban Design Committee because only signs larger than 12 m² trigger the review.""}]","A 10 m² sign would **not** need the Urban Design Committee.  
+
+According to policy **POL-01**, a sign face larger than **12 m²** triggers the Urban Design Committee review (which adds 10 working days to the SLA). Your previous 14 m² sign was above that threshold; a new 10 m² application would fall below it and follow the standard 5‑working‑day SLA for SGN permits.",2,0,7730,325,0.0,tool_calls stop,1,0,271,540,0.0,stop,495,0,nvidia/nemotron-3-ultra-550b-a55b:free,nvidia/nemotron-3-ultra-550b-a55b:free,nvidia/nemotron-3.5-lightning:free,nvidia/nemotron-3.5-lightning:free,auto: eval prompts state consent (as in the course's run_suite)

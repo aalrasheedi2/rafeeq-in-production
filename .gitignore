@@ -1,0 +1,11 @@
+﻿# secrets and local state: never published
+.env
+.env.*
+!.env.example
+*.sqlite
+*.sqlite-journal
+cache/
+artifacts/
+__pycache__/
+.pytest_cache/
+.venv/

@@ -1,0 +1,36 @@
+{
+ "config": "A",
+ "system_sha256": "fb4fbd6d59cd5319e3306d4f9f784339b7262f3cd4bbf4a0262afae041bbd77d",
+ "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+ "judge_model": "nvidia/nemotron-3.5-lightning:free",
+ "judge_max_tokens": 2000,
+ "fallbacks": false,
+ "response_cache": false,
+ "max_steps": 8,
+ "max_cost": 0.05,
+ "max_result_chars": 3000,
+ "mcp_tools": [
+  "search_policies",
+  "compute_fee"
+ ],
+ "local_tools": [
+  "get_permit",
+  "list_slots",
+  "book_inspection",
+  "reschedule_inspection",
+  "create_refund",
+  "escalate"
+ ],
+ "files": {
+  "rafeeq.py": "6953138278951670",
+  "AGENTS.md": "29e3e370978a12d6",
+  "eval_runner.py": "49a62c0b705d8241",
+  "evals.py": "e292097fd29a37c9",
+  "agentkit.py": "fc4a94c50f39faa7",
+  "madar.py": "4b4fbe5557a08f38",
+  "tasks.jsonl": "fba93a4ad8790eb4",
+  "madar_mcp.py": "cc6ff993755929d0",
+  "madar.sqlite": "c1e4ea086b78f339"
+ },
+ "config_files": {}
+}
